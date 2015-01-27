@@ -3,7 +3,7 @@
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1"charset="UTF-8">
 	<title>Document</title>
-	<link rel="stylesheet" href="">
+	<link rel="stylesheet" href="css/bootstrap-datetimepicker.css">
 
 	<!-- Normalize -->
 	<link href="css/normalize.css" rel="stylesheet">
@@ -17,6 +17,11 @@
 </head>
 <body>
 	
+	<!-- 
+	///////////////
+	//////////////Application /////////////////
+	//////////////
+	-->
 	<script type="text/x-handlebars" data-template-name='application'>
 		<nav class='navbar navbar-inverse navbar-fixed-top'>
 			<div  class="container-fluid">
@@ -26,27 +31,190 @@
 				<div id="navbar" class="navbar-collapse collapse">
 					<ul class="nav navbar-nav">
 						<li><a> {{#link-to 'sketches.create'}}+ New Sketch {{/link-to}}</a></li>
-						<li><a> {{#link-to 'sketches'}} Browse Sketch {{/link-to}} </a></li>
+						<li><a> {{#link-to 'sketches.index'}} Browse Sketch {{/link-to}} </a></li>
 					</ul>
 				</div>
 			</div>
 		</nav>
-		{{outlet}}
+		<div class="container">
+			{{outlet}}
+		</div>
 	</script>
+
 	
+	<!-- 
+	//////////////////////////////////////////////
+	//////////////Application Index /////////////////
+	/////////////////////////////////////////////////
+	-->
 	<script type="text/x-handlebars" data-template-name='index'>
 		<h1>Test....description of the app here....</h1>
 	</script>
-
+	
+	<!-- 
+	///////////////////////////////////////
+	//////////////Sketches /////////////////
+	///////////////////////////////////////
+	-->
 	<script type="text/x-handlebars" data-template-name='sketches'>
+		{{outlet}}
+	</script>
+
+	<!-- 
+	//////////////////////////////////////////////
+	//////////////Sketches Index /////////////////
+	/////////////////////////////////////////////
+	-->
+	<script type="text/x-handlebars" data-template-name='sketches/index'>
 		<h1>List of Sketches here</h1>
-		
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>Sketch #</td>
+					<th>Sketch Name</td>
+					<th>Owner</td>
+					<th>No. of Days</td>
+					<th>City, State</td>
+					<th>Country From</td>
+					<th>Upvote</td>
+					<th>No. of Posts</td>
+				</tr>
+			</thead>
+			<tbody>
+				{{#each sketch in controller}}
+				<tr>
+					<td>{{sketch.id}}</td>
+					<td>{{#link-to 'sketch.index' sketch.id}}{{sketch.sketchTitle}}{{/link-to}}</td>
+					<td>{{sketch.sketchOwner.userName}}</td>
+					<td>{{sketch.noOfDays}}</td>
+					<td>{{sketch.cityStateFrom}}</td>
+					<td>{{sketch.countryFrom}}</td>
+					<td>{{sketch.upvoteNumber}}</td>
+					<td>{{sketch.numberOfPosts}}</td>
+				</tr>
+				{{/each}}
+			</tbody>
+		</table>
+	</script>
+
+	<!-- 
+	//////////////////////////////////////
+	//////////////Sketch /////////////////
+	//////////////////////////////////////
+	-->
+	<script type="text/x-handlebars" data-template-name='sketch'>
+		<h1>{{model.sketchTitle}}</h1>
+		<h3>Sketch Here</h3>
+		{{#each post in posts}}
+			<div class="panel panel-default">
+			  <div class="panel-heading">
+			    <h3 class="panel-title">{{post.poster.userName}}</h3>
+			  </div>
+			  <div class="panel-body">
+			  	{{post.comments}}
+			  </div>
+			</div>
+		{{/each}}
+	</script>
+
+
+	<!-- 
+	/////////////////////////////////////////////
+	//////////////Create Sketch /////////////////
+	/////////////////////////////////////////////-->
+	<script type="text/x-handlebars" data-template-name='sketches/create'>
+		<h1>Create New Sketch Here</h1>
+		<div class="row">
+			<form action="" class="form-group">
+				<div class="row">
+					<label for="" class="col-sm-2 control-label">Title</label>
+					<div class="col-sm-10">
+						{{input class="form-control" value=sketch.sketchTitle}}
+						{{sketch.sketchTitle}}
+					</div>
+				</div>
+				<div class="row">
+					<label for="" class="col-sm-2 control-label">Description</label>
+					<div class="col-sm-10">
+						{{input class="form-control" value=sketch.sketchDescription}}
+						{{sketch.sketchDescription}}
+					</div>
+				</div>
+
+				<!-- //Sketch Type Radio Button// -->
+				<div class="row radio">
+						{{#each sketchType in sketchType}}
+							{{radio-button-outer value=sketchType.id label=sketchType.sketchTypeName selected=selectedSketchType}}
+						{{/each}}
+						{{selectedSketchType}}
+				
+				</div>
+				<div class="row">
+					<label for="" class="col-sm-2 control-label">Starting City</label>
+					<div class="col-sm-10">
+						{{input class="form-control" value=sketch.cityFrom}}
+					</div>
+				</div>
+				<div class="row">
+					<label for="" class="col-sm-2 control-label">No Of Days</label>
+					{{view "select" content=listOfDays value=sketch.noOfDays}} {{sketch.noOfDays}}
+				</div>
+				<div class="row">
+					<label for="" class="col-sm-2 control-label">Starting Date (initial: {{dateFrom}})
+					</label>
+					{{datetime-picker datetime=dateFrom iconOnRight=false}}
+				</div>
+				<button type="submit" class="btn btn-primary" {{action 'createSketch'}} >Create</button>
+			</form>
+		</div>
+	</script>
+
+
+
+	<!-- ////////////////////////////////////////
+	//////Datetime Picker Component//////////////
+	/////////////////////////////////////////////	 -->
+
+	<script type="text/x-handlebars" data-template-name="components/datetime-picker">
+	    <div class="form-group" >
+	    	{{datetime}}
+		    <div class='input-group date'>
+		      {{#if iconOnRight}}
+		          <input type='text' {{bind-attr placeholder=placeholder}} class="form-control" />
+		          <span class="input-group-addon">
+		            <span class="glyphicon glyphicon-calendar"></span>
+		          </span>
+		      {{else}}
+		          <span class="input-group-addon">
+		            <span class="glyphicon glyphicon-calendar"></span>
+		          </span>
+		          <input type='text' {{bind-attr placeholder=placeholder}} class="form-control" />
+		      {{/if}}  
+		    </div>
+	  	</div>
+	</script>
+
+<!--//////////////////////////////////////////// 
+////////Radio Button Component Template//////// 
+////////////////////////////////////////////-->
+	<script type="text/x-handlebars" data-template-name='components/radio-button-outer'>
+
+		{{radio-button name="inlineRadioOptions" value=value selected=selected}} {{label}}
 
 	</script>
 
+
+
+<!--////////////////////////////////////////// 	
+////////Radio Button Wrapper Component////////// 
+//////////////////////////////////////////////-->
 	
-
-
+	<!-- <script type="text/x-handlebars" data-template-name='components/ext-radio'>
+	{{#each content}}
+	        {{radio-button value=this name=view.name selection=view.selection}}
+	        {{this}}
+	{{/each}}
+	</script> -->
 
 
 
@@ -54,9 +222,22 @@
 	<script src="js/libs/handlebars-v2.0.0.js"></script>
 	<script src="js/libs/ember-1.9.1.js"></script>
 	<script src="js/libs/ember-data.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="js/libs/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js"></script>
+    <script src="https://eonasdan.github.io/bootstrap-datetimepicker/scripts/bootstrap-datetimepicker.js"></script>
+    <!-- Firebase -->
+	<script src="https://cdn.firebase.com/js/client/2.1.0/firebase.js"></script>	
+	<!-- EmberFire -->
+	<script src="https://cdn.firebase.com/libs/emberfire/1.3.1/emberfire.min.js"></script>
+
 	<!-- own js --> 
 	<script src="js/app.js"></script>
+	<script src="js/router.js"></script>
+	<script src="js/route.js"></script>
+	<script src="js/controller.js"></script>
+	<script src="js/view.js"></script>
+	<script src="js/component.js"></script>
+	<script src="js/model.js"></script>
 
 
 </body>

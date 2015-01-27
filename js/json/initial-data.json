@@ -1,0 +1,127 @@
+{
+	"users": {
+		"user_id_1": {
+			"userName": "John",
+			"sketch": {
+				"sketch_id_1": true, 
+				"sketch_id_3": true
+			},
+			"posts": {
+				"post_id_2": true
+			}
+		},
+		"user_id_2": {
+			"userName": "Maria",
+			"sketch": {
+				"sketch_id_2":true
+			},
+			"posts": {
+				"post_id_1": true 
+			}
+		}
+	}, 
+	"posts": {
+		"post_id_1": {
+			"sketch": "sketch_id_2", 
+			"poster": "user_id_2",
+			"comments": "I'm stuck in Tokyo for half a day. Any ideas on what to do?",
+			"originalPost": true, 
+			"upvoteNumber": 3,  
+			"downvoteNumber": 0
+
+		},
+		"post_id_2": {
+			"sketch": "sketch_id_2", 
+			"poster": "user_id_1",
+			"comments": "I made some suggestions on index.html#/sketches/3. Check it out!!",
+			"originalPost": false, 
+			"upvoteNumber": 15, 
+			"downvoteNumber": 1
+
+		}
+
+	}, 
+	"sketches": {
+		"sketch_id_1": { 
+			"sketchTitle": "3 Adventurous Days in Irak",
+			"sketchDescription": "I'd like to see some explosives, and would like to eat some lamb shanks too...Help me out?",
+			"sketchOwner": "user_id_1",
+			"noOfDays": 3,
+			"dateFrom": "02/13/2015",
+			"dateTo": "02/15/2015", 
+			"month": "February", 
+			"timeFrom": "12:30",
+			"timeTo": "18:00", 
+			"cityFrom": "Baghdad", 
+			"stateFrom": null, 
+			"countryFrom": "Irak", 
+			"upvoteNumber": 6, 
+			"downvoteNumber": 2, 
+			"resketchFrom": null, 
+			"sketchType": "sketch_type_id_2",
+			"dateCreated": "12/31/2014",
+			"lastEdited": "12/31/2014", 
+			"numberOfPosts": 3,
+			"posts": {
+			}
+		},
+		"sketch_id_2": {
+			"sketchTitle": "1 Short Trip in Tokyo",
+			"sketchDescription": "12 hours transit. What to do?",
+			"sketchOwner": "user_id_2",
+			"noOfDays": 1,
+			"dateFrom": "03/13/2015",
+			"dateTo": "03/14/2015", 
+			"month": "March", 
+			"timeFrom": "12:00",
+			"timeTo": "00:00", 
+			"cityFrom": "Tokyo", 
+			"stateFrom": null, 
+			"countryFrom": "Japan", 
+			"upvoteNumber": "32", 
+			"downvoteNumber": "11", 
+			"resketchFrom": null, 
+			"sketchType": "sketch_type_id_2",
+			"dateCreated": "12/31/2014",
+			"lastEdited": "12/31/2014", 
+			"numberOfPosts": 5,
+			"posts": {
+				"post_id_1": true,
+				"post_id_2": true	
+			}		
+		}, 
+		"sketch_id_3": {
+			"sketchTitle": "The Perfect Short Trip in Tokyo",
+			"sketchDescription": "My take on the 12 hours adventure in Tokyo",
+			"sketchOwner": "user_id_1",
+			"noOfDays": 2,
+			"dateFrom": "03/13/2015",
+			"dateTo": "03/14/2015", 
+			"month": "March", 
+			"timeFrom": "12:00",
+			"timeTo": "00:00", 
+			"cityFrom": "Tokyo", 
+			"stateFrom": null, 
+			"countryFrom": "Japan", 
+			"upvoteNumber": "13", 
+			"downvoteNumber": "1", 
+			"resketchFrom": "sketch_id_2", 
+			"sketchType": "sketch_type_id_1",
+			"dateCreated": "1/11/2015",
+			"lastEdited": "1/11/2015", 
+			"numberOfPosts": 1,
+			"posts": {
+			}
+		}  
+	}, 
+	"sketchType": {
+		"sketch_type_id_1" : {
+			"sketchTypeName": "Showcase"
+		},
+		"sketch_type_id_2" : {
+			"sketchTypeName": "Need Help"
+		}
+	}			
+}
+	
+
