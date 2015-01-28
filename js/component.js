@@ -6,7 +6,7 @@
 
 App.DatetimePickerComponent = Ember.Component.extend({
     pickerWrapper: null,
-    pickerData: null,
+    // pickerData: null,
     classNames: ['input-small'],
     format: "MM/DD/YYYY",
     placeholder: Ember.computed.alias('format'),
@@ -19,23 +19,25 @@ App.DatetimePickerComponent = Ember.Component.extend({
         var format = this.get('format');
 
 
-        var pickerWrapper = this.$().datetimepicker({
+        var $pickerWrapper = this.$('#datetimepicker').datetimepicker({
             format: format
         });
-        // this.set('pickerWrapper', pickerWrapper);
+        this.set('pickerWrapper', $pickerWrapper);
 
-        var pickerData = pickerWrapper.data("DateTimePicker");
-        this.set('pickerData', pickerData);
+        var $pickerData = $pickerWrapper.data("DateTimePicker");
+        this.set('pickerData', $pickerData);
         
-        if(this.get('datetime'))
-            pickerData.setDate(this.get('datetime'));
+        if(this.get('datetime')) {
+            $pickerData.date(this.get('datetime'));
+        }
         
-        pickerWrapper.on('dp.change', function (ev) {
-            var date = moment(ev.date.toISOString());
+        $pickerWrapper.on('dp.change', function (ev) {
+
+            var date = moment(ev.date).format();
             alert(date);
             //self.sendAction('action', ev.format());
             self.set('datetime', date);
-            pickerData.hide();
+            $pickerData.hide();
         });
 
     },
@@ -44,11 +46,11 @@ App.DatetimePickerComponent = Ember.Component.extend({
         // get model datetime
         var modelDatetime = this.get('datetime');
         // get picker datetime
-        var picker = this.get('pickerData');
-        var pickerDatetime = picker.getDate();
+        var $picker = this.get('pickerData');
+        var pickerDatetime = $picker.date();
         // if not the same the overwrite model over picker 
         if (modelDatetime != pickerDatetime) {
-            picker.setDate(modelDatetime);
+            $picker.date(modelDatetime);
         }
     }.observes('datetime')
 });
